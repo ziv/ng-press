@@ -2,6 +2,7 @@
   "name": "ng-press",
   "version": "0.0.0",
   "scripts": {
+    "routes": "./generate-routes.ts > src/app/server-routes.json",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -31,8 +32,14 @@
     "@angular/platform-server": "^20.2.0",
     "@angular/router": "^20.2.0",
     "@angular/ssr": "^20.2.1",
+    "@xprng/markdown": "^2.1.0",
+    "buffer": "^6.0.3",
     "express": "^5.1.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^16.3.0",
+    "marked-shiki": "^1.2.1",
     "rxjs": "~7.8.0",
+    "shiki": "^3.13.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

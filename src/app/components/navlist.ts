@@ -1,0 +1,51 @@
+import {Component, inject, input} from '@angular/core';
+import type {MenuItem} from '../types';
+import {RouterLink} from '@angular/router';
+import {CurrentUrl} from '../services/current-url';
+
+@Component({
+  selector: 'np-navlist',
+  imports: [
+    RouterLink
+  ],
+  template: `
+    <ul>
+      @for (item of items(); track item.link) {
+        <li [class]="itemClass(item.link)">
+          @if (item.link) {
+            <a [routerLink]="item.link"
+               [class]="linkClass(item.link)">{{ item.text }}</a>
+          }
+          @if (item.items) {
+            <span class="category">{{ item.text }}</span>
+            <np-navlist [items]="item.items"
+                        [depth]="depth() + 1"></np-navlist>
+          }
+        </li>
+      }
+    </ul>
+  `,
+})
+export class Navlist {
+  private readonly url = inject(CurrentUrl);
+
+  /**
+   * Depth of the current navlist, used for indentation
+   */
+  readonly depth = input<number>(0);
+
+  /**
+   * Menu items to display
+   */
+  readonly items = input.required<MenuItem[]>();
+
+  // style helpers
+
+  linkClass(url: string) {
+    return url === this.url.url() ? 'active' : '';
+  }
+
+  itemClass(url: string | undefined) {
+    return (url ?? '').startsWith(this.url.url()) ? 'includes' : ''
+  }
+}
