@@ -1,6 +1,7 @@
 import {Component, computed, effect, inject, viewChild} from '@angular/core';
 import {CurrentPath} from './services/current-path';
 import {Markdown} from '@xprng/markdown';
+import {ErrorState} from '@xprng/common';
 import {Title} from '@angular/platform-browser';
 import type {NgPressConfig} from './types';
 import {CONFIG_TOKEN} from './services/provide-config';
@@ -11,8 +12,8 @@ import {PlatformLocation} from '@angular/common';
 @Component({
   selector: 'np-doc',
   imports: [
-    // Markdown,
-    // ErrorState,
+    Markdown,
+    ErrorState,
     Navlist
   ],
   template: `
@@ -36,11 +37,11 @@ import {PlatformLocation} from '@angular/common';
       }
 
       <main class="container-fluid">
-<!--        <xpr-markdown [src]="src()" [theme]="conf.shiki.theme">-->
-<!--          <xpr-error-state>-->
-<!--            <p>404 - Page not found</p>-->
-<!--          </xpr-error-state>-->
-<!--        </xpr-markdown>-->
+        <xpr-markdown [src]="src()" [theme]="conf.shiki.theme">
+          <xpr-error-state>
+            <p>404 - Page not found</p>
+          </xpr-error-state>
+        </xpr-markdown>
         <pre>{{ src() }}</pre>
       </main>
     </div>
@@ -68,15 +69,8 @@ export default class Doc {
    * Path to the markdown file
    */
   protected readonly src = computed(() => {
-    const path = this.path.path();
-    if (!path) {
-      return undefined;
-    }
-    if (path.startsWith('http')) {
-      return undefined; // do not allow URL injection
-    }
-    console.error(`${this.baseHref}${path}.md`);
-    return `${this.baseHref}${path}.md`;
+    const path = this.path.path() || 'index';
+    return `https://ziv.github.io/ng-press/${path}.md`
   });
 
   /**
