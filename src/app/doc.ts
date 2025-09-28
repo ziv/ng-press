@@ -1,20 +1,18 @@
-import {Component, computed, effect, inject, PLATFORM_ID, TransferState, viewChild} from '@angular/core';
+import {Component, computed, effect, inject, viewChild} from '@angular/core';
 import {CurrentPath} from './services/current-path';
 import {Markdown} from '@xprng/markdown';
-import {ErrorState} from '@xprng/common';
 import {Title} from '@angular/platform-browser';
 import type {NgPressConfig} from './types';
 import {CONFIG_TOKEN} from './services/provide-config';
 import {Navlist} from './components/navlist';
-import {isPlatformServer, PlatformLocation} from '@angular/common';
-import {PlatformState} from '@angular/platform-server';
+import {PlatformLocation} from '@angular/common';
 
 
 @Component({
   selector: 'np-doc',
   imports: [
-    Markdown,
-    ErrorState,
+    // Markdown,
+    // ErrorState,
     Navlist
   ],
   template: `
