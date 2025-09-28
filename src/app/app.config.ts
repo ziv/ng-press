@@ -1,5 +1,5 @@
 import {ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection} from '@angular/core';
-import {provideRouter, withHashLocation, withViewTransitions} from '@angular/router';
+import {provideRouter, withViewTransitions} from '@angular/router';
 import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import {routes} from './app.routes';
 import {provideHttpClient, withFetch} from '@angular/common/http';
@@ -11,7 +11,7 @@ export default {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes, withViewTransitions(), withHashLocation()),
+    provideRouter(routes, withViewTransitions()),
     provideClientHydration(withEventReplay()),
 
     // added
