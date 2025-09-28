@@ -14,7 +14,7 @@ export default defineConfig({
   topbar: {
     items: [
       [
-        {text: 'Home', link: '/index'},
+        {text: 'Home', link: '/home'},
         {text: 'Example', link: '/example'},
       ],
     ]
