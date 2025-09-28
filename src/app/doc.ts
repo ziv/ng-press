@@ -42,7 +42,6 @@ import {PlatformLocation} from '@angular/common';
             <p>404 - Page not found</p>
           </xpr-error-state>
         </xpr-markdown>
-        <pre>{{ src() }}</pre>
       </main>
     </div>
 
