@@ -1,55 +1,103 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
-import {httpResource} from '@angular/common/http';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {CurrentUrl} from './services/current-url';
-import {Vendor} from './services/vendor';
+import {Component, computed, effect, inject, PLATFORM_ID, TransferState, viewChild} from '@angular/core';
+import {CurrentPath} from './services/current-path';
+import {Markdown} from '@xprng/markdown';
+import {ErrorState} from '@xprng/common';
+import {Title} from '@angular/platform-browser';
+import type {NgPressConfig} from './types';
+import {CONFIG_TOKEN} from './services/provide-config';
+import {Navlist} from './components/navlist';
+import {isPlatformServer, PlatformLocation} from '@angular/common';
+import {PlatformState} from '@angular/platform-server';
+
 
 @Component({
   selector: 'np-doc',
+  imports: [
+    Markdown,
+    ErrorState,
+    Navlist
+  ],
   template: `
-    <div [innerHTML]="inner()"></div>
+    <!-- header -->
+    <header class="container-fluid">
+      <nav>
+        <ul>
+          <li><strong>{{ conf.name }}</strong></li>
+        </ul>
+        <np-navlist [items]="conf.topbar.items"/>
+      </nav>
+    </header>
+
+    <!-- main content -->
+    <div class="wrapper">
+
+      @if (showSidebar()) {
+        <aside>
+          <np-navlist [items]="conf.sidebar.items"/>
+        </aside>
+      }
+
+      <main class="container-fluid">
+        <xpr-markdown [src]="src()" [theme]="conf.shiki.theme">
+          <xpr-error-state>
+            <p>404 - Page not found</p>
+          </xpr-error-state>
+        </xpr-markdown>
+        <pre>{{ src() }}</pre>
+      </main>
+    </div>
+
+    <!-- footer -->
+    <footer>
+      @if (conf.footerText) {
+        <small>{{ conf.footerText }}</small>
+      }
+    </footer>
   `
 })
 export default class Doc {
-  // services
-  sanitize = inject(DomSanitizer);
-  url = inject(CurrentUrl);
+  protected readonly baseHref = inject(PlatformLocation).getBaseHrefFromDOM();
+  protected readonly md = viewChild(Markdown);
+  protected readonly path = inject(CurrentPath);
+  protected readonly conf = inject<NgPressConfig>(CONFIG_TOKEN);
 
-  // resources
-  marked = inject(Vendor).marked;
+
+  protected showSidebar() {
+    return this.layout() !== 'hero';
+  }
 
   /**
    * Path to the markdown file
-   * @protected
    */
-  protected readonly path = computed(() => {
-    const url = this.url.url();
-    if (!url) {
+  protected readonly src = computed(() => {
+    const path = this.path.path();
+    if (!path) {
       return undefined;
     }
-    // do not allow URL injection
-    if (url.startsWith('http')) {
-      return undefined;
+    if (path.startsWith('http')) {
+      return undefined; // do not allow URL injection
     }
-    return `${url}.md`;
-  })
+    console.error(`${this.baseHref}${path}.md`);
+    return `${this.baseHref}${path}.md`;
+  });
 
   /**
-   * Sanitized HTML content
-   * @protected
+   * Frontmatter of the current markdown file
    */
-  protected readonly inner = signal<SafeHtml>(this.sanitize.bypassSecurityTrustHtml(''));
+  protected readonly frontmatter = computed(() => this.md()?.frontmatter() ?? {});
 
   /**
-   * Raw markdown content loaded from the server
-   * @protected
+   * Layout of the current document (from frontmatter, defaults to 'default')
    */
-  protected readonly content = httpResource.text<string>(() => this.path(), {defaultValue: ''});
+  protected readonly layout = computed(() => this.frontmatter()['layout'] ?? 'default');
 
   constructor() {
-    effect(async () => {
-      const parsed = await this.marked!.parse(this.content.value());
-      this.inner.set(this.sanitize.bypassSecurityTrustHtml(parsed));
+    const title = inject(Title);
+    effect(() => {
+      const fm = this.frontmatter();
+      if (fm['title']) {
+        title.setTitle(fm['title']);
+      }
     });
   }
 }

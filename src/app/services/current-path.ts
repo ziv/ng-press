@@ -9,7 +9,7 @@ import {filter} from 'rxjs';
  * So ActivatedRoute will not work as expected.
  */
 @Injectable({providedIn: 'root'})
-export class CurrentUrl {
+export class CurrentPath {
   /**
    * Signal that emits the current URL after each navigation ends.
    * @private
@@ -19,11 +19,9 @@ export class CurrentUrl {
   /**
    * The current URL as a signal.
    */
-  readonly url = computed(() => {
+  readonly path = computed(() => {
     const e = this.end();
-    if (!e) {
-      return '/';
-    }
-    return (e as NavigationEnd).url;
-  })
+    const p = e ? (e as NavigationEnd).url : '';
+    return p.startsWith('/') ? p.substring(1) : p;
+  });
 }

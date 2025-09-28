@@ -1,0 +1,23 @@
+[
+  {
+    "**": "introduction"
+  },
+  {
+    "**": "index"
+  },
+  {
+    "**": "example"
+  },
+  {
+    "**": "guides/xyz"
+  },
+  {
+    "**": "guides/routing"
+  },
+  {
+    "**": "guides/abc"
+  },
+  {
+    "**": "example/quick-start"
+  }
+]

@@ -1,59 +1,64 @@
 # NgPress
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.1.
+## Case Study
 
-## Development server
+Generating a static blog site with Angular SSG and Markdown files.
 
-To start a local development server, run:
+This project is a case study to demonstrate the SSG capabilities of Angular.
 
-```bash
-ng serve
+## Introduction
+
+**NgPress** is a static site generator built with Angular.
+It allows you to create a microblog or documentation site using markdown files as content.
+It generates server routes based on the file structure in the `public` folder.
+Each route is configured to load a markdown file and render it as HTML page with Angular functionality.
+All server routes are pre-rendered at build time resulting in a fast static site.
+
+## Usage
+
+### Content
+
+Put markdown files are stored in the `public` folder.
+
+Run the following command to generate routes from the files structure:
+
+```shell
+npm run routes
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Run this command after adding or removing markdown files.
 
-## Code scaffolding
+### Frontmatter
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Each markdown file can have a frontmatter section to define metadata. The following fields are supported:
 
-```bash
-ng generate component component-name
+- `title`: The title of the page.
+- `description`: A short description of the page.
+- `layout`: The layout to use for the page.
+
+All fields are optional.
+
+### Configuration
+
+Edit `src/ngpress.config.ts` to change the site configuration.
+
+Allow you to configure minimal settings such as:
+
+- Site title
+- Top menu links
+- Sidebar links
+- Footer text
+
+### Files structure and routing
+
+The files structure in the `public` folder determines the routes of the site.
+
+```
+public/
+├── guides/abc.md       -> /guides/abc
+├── guides/def.md       -> /guides/def
+├── index.md            -> /index
+└── about.md            -> /about
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The minimal requirement is to have an `index.md` file in the `public` folder.

@@ -18,6 +18,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "baseHref": "/ng-press/",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -49,7 +50,7 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "none"
             },
             "development": {
               "optimization": false,

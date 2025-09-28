@@ -7,14 +7,14 @@ export type MenuItem = {
 export type NgPressConfig = {
   title: string;
   name: string;
-  copyright: string;
+  footerText: string;
 
   topbar: {
-    items: MenuItem[];
+    items: MenuItem[][];
   };
 
   sidebar: {
-    items: MenuItem[];
+    items: MenuItem[][];
   };
 
   shiki: {

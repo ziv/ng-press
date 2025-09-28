@@ -1,17 +1,18 @@
-#!/usr/bin/env deno --allow-read
-import {walk} from "jsr:@std/fs";
+#!/usr/bin/env tsx
+import {globSync} from 'glob';
 
-const entries: {'**': string}[] = [];
+/**
+ * Generates a list of route entries based on markdown files in the public directory.
+ * Each entry is an object with a '**' key pointing to the route path derived from the file path.
+ * The output is a JSON array printed to the console.
+ * Example output:
+ * [
+ *   { "**": "docs/getting-started" },
+ *   { "**": "blog/welcome" }
+ * ]
+ */
+const entries: { '**': string }[] = globSync('./public/**/*.md').map(e => ({
+  '**': e.replace('public/', '').replace('.md', '')
+}));
 
-for await (const entry of walk("./public")) {
-  if (!entry.path.endsWith('.md')) {
-    continue;
-  }
-  entries.push({
-    '**': entry.path.replace('public/', '').replace('.md', '')
-  });
-  // const entry = {
-  //   '**': entry.path.replace('public/', '').replace('.md', '')
-  // }
-}
 console.log(JSON.stringify(entries, null, 2));
