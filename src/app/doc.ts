@@ -38,11 +38,11 @@ import {PlatformState} from '@angular/platform-server';
       }
 
       <main class="container-fluid">
-        <xpr-markdown [src]="src()" [theme]="conf.shiki.theme">
-          <xpr-error-state>
-            <p>404 - Page not found</p>
-          </xpr-error-state>
-        </xpr-markdown>
+<!--        <xpr-markdown [src]="src()" [theme]="conf.shiki.theme">-->
+<!--          <xpr-error-state>-->
+<!--            <p>404 - Page not found</p>-->
+<!--          </xpr-error-state>-->
+<!--        </xpr-markdown>-->
         <pre>{{ src() }}</pre>
       </main>
     </div>
