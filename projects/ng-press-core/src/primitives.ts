@@ -9,6 +9,7 @@ export type ContentItem = {
 }
 
 export type NgPressConfig = {
+  base: string;
   title: string;
   name: string;
 

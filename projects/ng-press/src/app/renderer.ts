@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, effect, inject, TemplateRef, viewChild} from '@angular/core';
-import {NgComponentOutlet, PlatformLocation} from '@angular/common';
+import {NgComponentOutlet} from '@angular/common';
 import {httpResource} from '@angular/common/http';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {ActivatedNgPress, injectNgPress, type NgPressConfig} from 'ng-press-core';
@@ -34,7 +34,6 @@ export type ParsedFile = {
 export class Renderer {
   // Configuration
   protected readonly conf = injectNgPress();
-  protected readonly prefix = inject(PlatformLocation).getBaseHrefFromDOM();
 
   // Service required by this component
   protected readonly sanitizer = inject(DomSanitizer);
@@ -47,7 +46,7 @@ export class Renderer {
   readonly path = routePath();
 
   // 2. Use the path signal to load a Markdown file dynamically
-  protected readonly res = httpResource.text(() => `${this.path() || 'index'}.md`);
+  protected readonly res = httpResource.text(() => `${this.conf.base}${this.path() || 'index'}.md`);
 
   // 3. Use the returned resource to parse both front-matter and Markdown content
   protected parsed = computed<ParsedFile>(() => {
@@ -94,7 +93,6 @@ export class Renderer {
 
     // get the component from configuration or use default one
     return (layout in this.conf.components) ? this.conf.components[layout] : DefaultPage;
-
   });
 
   constructor() {
