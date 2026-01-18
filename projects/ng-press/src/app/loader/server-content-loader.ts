@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {NG_PRESS_TOKEN} from 'ng-press-core'; // Your config
 
 @Injectable()
-export class ServerContentLoaderService implements ContentLoader {
+export class ServerContentLoader implements ContentLoader {
   private conf = inject(NG_PRESS_TOKEN);
 
   async load(path: string): Promise<string> {

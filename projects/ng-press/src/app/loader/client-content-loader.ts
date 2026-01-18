@@ -3,7 +3,7 @@ import {ContentLoader} from './content-loader';
 import {NG_PRESS_TOKEN} from 'ng-press-core';
 
 @Injectable()
-export class ClientContentLoaderService implements ContentLoader {
+export class ClientContentLoader implements ContentLoader {
   private conf = inject(NG_PRESS_TOKEN);
 
   async load(path: string): Promise<string> {

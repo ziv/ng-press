@@ -5,13 +5,13 @@ import {provideClientHydration, withEventReplay, withHttpTransferCacheOptions} f
 import {provideNgPress} from 'ng-press-core';
 import {Page, Home} from 'example';
 import {CONTENT_LOADER} from './loader/content-loader';
-import {ClientContentLoaderService} from './loader/client-content-loader';
+import {ClientContentLoader} from './loader/client-content-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     {
       provide: CONTENT_LOADER,
-      useClass: ClientContentLoaderService
+      useClass: ClientContentLoader
     },
 
     provideClientHydration(
