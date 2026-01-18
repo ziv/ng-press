@@ -47,7 +47,7 @@ export class Renderer {
   readonly path = routePath();
 
   // 2. Use the path signal to load a Markdown file dynamically
-  protected readonly res = httpResource.text(() => `${this.prefix}${this.path() || 'index'}.md`);
+  protected readonly res = httpResource.text(() => `${this.path() || 'index'}.md`);
 
   // 3. Use the returned resource to parse both front-matter and Markdown content
   protected parsed = computed<ParsedFile>(() => {

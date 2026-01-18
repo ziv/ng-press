@@ -24,7 +24,7 @@
             "baseHref": "/ng-press/",
             "allowedCommonJsDependencies": [
               "yaml",
-              "sanitize-html"
+              "insane"
             ],
             "browser": "projects/ng-press/src/main.ts",
             "tsConfig": "projects/ng-press/tsconfig.app.json",
