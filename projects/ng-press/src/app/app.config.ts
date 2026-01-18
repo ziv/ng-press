@@ -3,17 +3,16 @@ import {provideRouter, withViewTransitions} from '@angular/router';
 import {provideHttpClient, withFetch} from '@angular/common/http';
 import {provideNgPress} from 'ng-press-core';
 import {Page, Home} from 'example';
+import {provideClientHydration, withEventReplay, withHttpTransferCacheOptions} from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // we do not use hydration in this example
-    // everything is rendered on the server side only
-    // provideClientHydration(
-    //   withEventReplay(),
-    //   withHttpTransferCacheOptions({
-    //     includePostRequests: true
-    //   }),
-    // ),
+    provideClientHydration(
+      withEventReplay(),
+      withHttpTransferCacheOptions({
+        includePostRequests: true
+      }),
+    ),
     provideBrowserGlobalErrorListeners(),
 
     /**
