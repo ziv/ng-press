@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build ng-press-core && ng build example && ng build ng-press",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:ng-press": "node dist/ng-press/server/server.mjs",
