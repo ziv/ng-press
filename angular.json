@@ -6,5 +6,167 @@
   },
   "newProjectRoot": "projects",
   "projects": {
+    "ng-press": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true
+        }
+      },
+      "root": "projects/ng-press",
+      "sourceRoot": "projects/ng-press/src",
+      "prefix": "ngp",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "yaml",
+              "sanitize-html"
+            ],
+            "browser": "projects/ng-press/src/main.ts",
+            "tsConfig": "projects/ng-press/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/ng-press/public"
+              }
+            ],
+            "styles": [
+              "projects/ng-press/src/styles.css"
+            ],
+            "server": "projects/ng-press/src/main.server.ts",
+            "outputMode": "static",
+            "ssr": {
+              "entry": "projects/ng-press/src/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "ng-press:build:production"
+            },
+            "development": {
+              "buildTarget": "ng-press:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        },
+        "e2e": {
+          "builder": "playwright-ng-schematics:playwright",
+          "options": {
+            "devServerTarget": "ng-press:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-press:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "ng-press-core": {
+      "projectType": "library",
+      "root": "projects/ng-press-core",
+      "sourceRoot": "projects/ng-press-core/src",
+      "prefix": "ngp",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-press-core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-press-core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/ng-press-core/tsconfig.spec.json"
+          }
+        },
+        "e2e": {
+          "builder": "playwright-ng-schematics:playwright",
+          "options": {
+            "devServerTarget": "ng-press-core:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-press-core:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "example": {
+      "projectType": "library",
+      "root": "projects/example",
+      "sourceRoot": "projects/example/src",
+      "prefix": "ex",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/example/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/example/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/example/tsconfig.spec.json"
+          }
+        },
+        "e2e": {
+          "builder": "playwright-ng-schematics:playwright",
+          "options": {
+            "devServerTarget": "example:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "example:serve:production"
+            }
+          }
+        }
+      }
+    }
   }
 }

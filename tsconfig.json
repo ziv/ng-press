@@ -3,6 +3,14 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "example": [
+        "./dist/example"
+      ],
+      "ng-press-core": [
+        "./dist/ng-press-core"
+      ]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -21,5 +29,25 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/ng-press/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/ng-press/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ng-press-core/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ng-press-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/example/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/example/tsconfig.spec.json"
+    }
+  ]
 }
