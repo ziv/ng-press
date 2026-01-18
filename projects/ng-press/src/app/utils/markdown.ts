@@ -5,7 +5,6 @@ import insane from 'insane';
 
 export function parseMarkdown(md: string) {
   const html = marked.use(markedShiki(), gfmHeadingId()).parse(md) as string;
-
   // the Angular sanitizer is not configurable enough for our needs
   // so we use sanitize-html instead
   return {

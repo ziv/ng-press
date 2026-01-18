@@ -1,5 +1,10 @@
 import js from '@shikijs/langs/javascript'
 import ts from '@shikijs/langs/ts'
+import html from '@shikijs/langs/html';
+import bash from '@shikijs/langs/bash';
+import css from '@shikijs/langs/css';
+import markdown from '@shikijs/langs/markdown';
+import json from '@shikijs/langs/json'
 import nord from '@shikijs/themes/nord'
 import {createHighlighterCoreSync} from 'shiki/core'
 import {createJavaScriptRegexEngine} from 'shiki/engine/javascript'
@@ -9,7 +14,7 @@ import type {MarkedExtension, Token} from 'marked';
 // to keep the bundle size small and to create a synchronous highlighter
 const shiki = createHighlighterCoreSync({
   themes: [nord],
-  langs: [js, ts],
+  langs: [js, ts, css, html, bash, json, markdown],
   engine: createJavaScriptRegexEngine()
 })
 
