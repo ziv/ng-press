@@ -2,7 +2,7 @@ import {ApplicationConfig, provideBrowserGlobalErrorListeners} from '@angular/co
 import {provideRouter, withViewTransitions} from '@angular/router';
 import {provideHttpClient, withFetch} from '@angular/common/http';
 import {provideNgPress} from 'ng-press-core';
-import {Page} from 'example';
+import {Page, Home} from 'example';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,22 +44,28 @@ export const appConfig: ApplicationConfig = {
 
       components: {
         page: Page,
+        home: Home,
       },
 
       content: [
         {
-          title: 'Welcome to NgPress',
+          title: 'Home',
           link: '',
+        },
+        {
+          title: 'About NgPress',
+          link: 'about',
+          tags: ['loc:topbar'],
         },
         {
           title: 'Getting Started',
           link: 'content/get-started',
-          tags: ['loc:sidebar', 'sub:guides'],
+          tags: ['loc:sidebar'],
         },
         {
           title: 'Installation Guide',
           link: 'content/installation',
-          tags: ['loc:sidebar', 'sub:guides'],
+          tags: ['loc:sidebar'],
         },
         {
           title: 'Example',
