@@ -1,26 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  SecurityContext,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, TemplateRef, viewChild} from '@angular/core';
 import {NgComponentOutlet, PlatformLocation} from '@angular/common';
 import {httpResource} from '@angular/common/http';
-import {frontMatter} from './utils/front-matter';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {marked} from 'marked';
 import {ActivatedNgPress, injectNgPress, type NgPressConfig} from 'ng-press-core';
-import {getHeadingList, gfmHeadingId, HeadingData} from 'marked-gfm-heading-id';
+import {HeadingData} from 'marked-gfm-heading-id';
+import {frontMatter} from './utils/front-matter';
 import {routePath} from './utils/route-path';
+import {parseMarkdown} from './utils/markdown';
 import {DefaultPage} from './components/default-page';
 import {Default404} from './components/default-404';
-import {markedShiki} from './utils/shiki';
-import sanitizeHtml from 'sanitize-html';
-
 
 export type ParsedFile = {
   body: SafeHtml;
@@ -78,27 +66,8 @@ export class Renderer {
     // parse front-matter
     const {data, markdown} = frontMatter(this.res.value());
 
-    // we use marked-gfm-heading-id to generate heading IDs
-    // and then extract the heading list later on
-    const html = marked.use(markedShiki(), gfmHeadingId()).parse(markdown) as string;
-    const heading = getHeadingList();
-
-    // ensure that the HTML is safe
-    // we allow style attributes on pre and span for shiki syntax highlighting
-    // we allow id attributes on headings for heading links
-    // the Angular sanitizer is not configurable enough for our needs
-    const sanitized = sanitizeHtml(html, {
-      allowedAttributes: {
-        pre: ['style'],
-        span: ['style'],
-        h1: ['id'],
-        h2: ['id'],
-        h3: ['id'],
-        h4: ['id'],
-        h5: ['id'],
-        h6: ['id'],
-      }
-    });
+    // ensure that the HTML is safe and get headings
+    const {sanitized, heading} = parseMarkdown(markdown);
 
     // allow Angular to trust the HTML content
     const body = this.sanitizer.bypassSecurityTrustHtml(sanitized);
