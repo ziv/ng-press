@@ -38,6 +38,7 @@ export const appConfig: ApplicationConfig = {
      * NgPress Configuration
      */
     provideNgPress({
+      base: 'https://raw.githubusercontent.com/ziv/ng-press/refs/heads/main/projects/ng-press/public/',
       name: 'Demo NgPress',
       title: 'NgPress Demo',
 
