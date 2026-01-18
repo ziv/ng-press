@@ -1,9 +1,9 @@
 import {ApplicationConfig, provideBrowserGlobalErrorListeners} from '@angular/core';
 import {provideRouter, withViewTransitions} from '@angular/router';
 import {provideHttpClient, withFetch} from '@angular/common/http';
+import {provideClientHydration, withEventReplay, withHttpTransferCacheOptions} from '@angular/platform-browser';
 import {provideNgPress} from 'ng-press-core';
 import {Page, Home} from 'example';
-import {provideClientHydration, withEventReplay, withHttpTransferCacheOptions} from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -50,6 +50,7 @@ export const appConfig: ApplicationConfig = {
         {
           title: 'Home',
           link: '',
+          tags: ['loc:topbar'],
         },
         {
           title: 'About NgPress',
@@ -69,7 +70,7 @@ export const appConfig: ApplicationConfig = {
         {
           title: 'Example',
           link: 'example',
-          tags: ['example'],
+          tags: ['loc:sidebar'],
         }
       ]
     }),
