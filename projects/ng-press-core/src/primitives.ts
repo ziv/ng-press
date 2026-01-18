@@ -9,7 +9,10 @@ export type ContentItem = {
 }
 
 export type NgPressConfig = {
+  // path to resource base URL
   base: string;
+  local: string;
+
   title: string;
   name: string;
 

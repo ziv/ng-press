@@ -1,6 +1,14 @@
-import {ChangeDetectionStrategy, Component, computed, effect, inject, TemplateRef, viewChild} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  resource,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
 import {NgComponentOutlet} from '@angular/common';
-import {httpResource} from '@angular/common/http';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {ActivatedNgPress, injectNgPress, type NgPressConfig} from 'ng-press-core';
 import {HeadingData} from 'marked-gfm-heading-id';
@@ -9,6 +17,7 @@ import {routePath} from './utils/route-path';
 import {parseMarkdown} from './utils/markdown';
 import {DefaultPage} from './components/default-page';
 import {Default404} from './components/default-404';
+import {CONTENT_LOADER, ContentLoader} from './loader/content-loader';
 
 export type ParsedFile = {
   body: SafeHtml;
@@ -38,6 +47,7 @@ export class Renderer {
   // Service required by this component
   protected readonly sanitizer = inject(DomSanitizer);
   protected readonly press = inject(ActivatedNgPress);
+  private loader = inject<ContentLoader>(CONTENT_LOADER);
 
   // Template reference for projecting Markdown content
   private readonly contentTemplate = viewChild.required<TemplateRef<unknown>>('contentTemplate');
@@ -46,7 +56,14 @@ export class Renderer {
   readonly path = routePath();
 
   // 2. Use the path signal to load a Markdown file dynamically
-  protected readonly res = httpResource.text(() => `${this.conf.base}${this.path() || 'index'}.md`);
+  // protected readonly res = httpResource.text(() => `${this.conf.base}${this.path() || 'index'}.md`);
+
+
+  protected readonly res = resource({
+    params: () => ({path: this.path()}),
+    loader: async ({params}) => this.loader.load(params.path ?? ''),
+    defaultValue: '',
+  })
 
   // 3. Use the returned resource to parse both front-matter and Markdown content
   protected parsed = computed<ParsedFile>(() => {

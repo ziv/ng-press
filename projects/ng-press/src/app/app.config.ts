@@ -4,9 +4,16 @@ import {provideHttpClient, withFetch} from '@angular/common/http';
 import {provideClientHydration, withEventReplay, withHttpTransferCacheOptions} from '@angular/platform-browser';
 import {provideNgPress} from 'ng-press-core';
 import {Page, Home} from 'example';
+import {CONTENT_LOADER} from './loader/content-loader';
+import {ClientContentLoaderService} from './loader/client-content-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    {
+      provide: CONTENT_LOADER,
+      useClass: ClientContentLoaderService
+    },
+
     provideClientHydration(
       withEventReplay(),
       withHttpTransferCacheOptions({
@@ -37,7 +44,9 @@ export const appConfig: ApplicationConfig = {
      * NgPress Configuration
      */
     provideNgPress({
-      base: 'https://raw.githubusercontent.com/ziv/ng-press/refs/heads/main/projects/ng-press/public/',
+      base: '',
+      local: './projects/ng-press/public/',
+
       name: 'Demo NgPress',
       title: 'NgPress Demo',
 
