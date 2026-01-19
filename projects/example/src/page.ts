@@ -9,6 +9,13 @@ import {TableOfContent} from './table-of-content';
     NgPressContent,
     TableOfContent,
   ],
+  styles: `
+    main {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+    }
+  `,
   template: `
     <header class="container">
       <nav>
@@ -19,8 +26,12 @@ import {TableOfContent} from './table-of-content';
     </header>
 
     <main class="container">
-<!--      <ngp-toc [headings]="press().heading" />-->
-      <ngp-content/>
+      <aside>
+        <ngp-toc [headings]="press().heading"/>
+      </aside>
+      <article>
+        <ngp-content/>
+      </article>
     </main>
 
 
