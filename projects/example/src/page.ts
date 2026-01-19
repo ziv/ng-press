@@ -22,6 +22,9 @@ import {TableOfContent} from './table-of-content';
         <ul>
           <li><strong>{{ press().conf.name }}</strong></li>
         </ul>
+        <ul>
+          <li><a href="/about">About</a></li>
+        </ul>
       </nav>
     </header>
 

@@ -1,26 +1,20 @@
 import {ApplicationConfig, provideBrowserGlobalErrorListeners} from '@angular/core';
 import {provideRouter, withViewTransitions} from '@angular/router';
-import {provideHttpClient, withFetch} from '@angular/common/http';
+import {provideClientHydration, withEventReplay, withHttpTransferCacheOptions} from '@angular/platform-browser';
 import {provideNgPress} from 'ng-press-core';
-import {Page, Home} from 'example';
+import {Home, Page} from 'example';
 import {CONTENT_LOADER} from './loader/content-loader';
 import {ClientContentLoader} from './loader/client-content-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    {
-      provide: CONTENT_LOADER,
-      useClass: ClientContentLoader
-    },
-
-    // provideClientHydration(
-    //   withEventReplay(),
-    //   withHttpTransferCacheOptions({
-    //     includePostRequests: true
-    //   }),
-    // ),
+    provideClientHydration(
+      withEventReplay(),
+      withHttpTransferCacheOptions({
+        includePostRequests: true
+      }),
+    ),
     provideBrowserGlobalErrorListeners(),
-
     /**
      * We have a single route that loads everything dynamically
      * The view transitions make route changes smoother
@@ -33,12 +27,10 @@ export const appConfig: ApplicationConfig = {
       ],
       withViewTransitions(),
     ),
-
-    /**
-     * Required since we're using `httpResource`
-     */
-    provideHttpClient(withFetch()),
-
+    {
+      provide: CONTENT_LOADER,
+      useClass: ClientContentLoader
+    },
     /**
      * NgPress Configuration
      */
