@@ -14,5 +14,5 @@ import {ActivatedNgPress, NgPressContent} from 'ng-press-core';
   `,
 })
 export class Home {
-  protected readonly press = inject(ActivatedNgPress).state;
+  protected readonly press = inject(ActivatedNgPress);
 }

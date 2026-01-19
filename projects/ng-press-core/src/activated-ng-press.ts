@@ -1,6 +1,7 @@
 import {Injectable, signal, type TemplateRef} from '@angular/core';
 import type {HeadingData} from 'marked-gfm-heading-id';
 import type {NgPressConfig} from './primitives';
+import {injectNgPress} from './utils';
 
 export type NgPressState = {
   conf: NgPressConfig;
@@ -14,10 +15,8 @@ export type NgPressState = {
  */
 @Injectable({providedIn: 'root'})
 export class ActivatedNgPress {
-  readonly state = signal<NgPressState>({
-    conf: {} as NgPressConfig,
-    template: null,
-    data: {},
-    heading: [] as HeadingData[],
-  });
+  readonly config = signal<NgPressConfig>(injectNgPress());
+  readonly template = signal<TemplateRef<unknown> | null>(null);
+  readonly data = signal<Record<string, unknown>>({});
+  readonly heading = signal<HeadingData[]>([]);
 }

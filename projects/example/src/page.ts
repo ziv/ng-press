@@ -20,17 +20,17 @@ import {TableOfContent} from './table-of-content';
     <header class="container">
       <nav>
         <ul>
-          <li><strong>{{ press().conf.name }}</strong></li>
+          <li><strong>{{ press.config().name }}</strong></li>
         </ul>
         <ul>
-          <li><a href="/about">About</a></li>
+          <li><a href="/ng-press/about">About</a></li>
         </ul>
       </nav>
     </header>
 
     <main class="container">
       <aside>
-        <ngp-toc [headings]="press().heading"/>
+        <ngp-toc [headings]="press.heading()"/>
       </aside>
       <article>
         <ngp-content/>
@@ -44,5 +44,5 @@ import {TableOfContent} from './table-of-content';
   `,
 })
 export class Page {
-  protected readonly press = inject(ActivatedNgPress).state;
+  protected readonly press = inject(ActivatedNgPress);
 }

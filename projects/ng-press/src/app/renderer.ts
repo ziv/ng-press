@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -30,7 +31,7 @@ import {contentParser} from './utils/content-parser';
     </ng-template>
   `,
 })
-export class Renderer {
+export class Renderer implements AfterViewInit {
   // Configuration
   private readonly conf = injectNgPress();
 
@@ -48,7 +49,7 @@ export class Renderer {
   // 2. Use the path signal to load a Markdown file dynamically
   private readonly res = resource({
     params: () => ({path: this.path()}),
-    loader: async ({params}) => this.loader.load(params.path ?? ''),
+    loader: async ({params}) => this.loader.load(params.path),
     defaultValue: '',
   });
 
@@ -90,13 +91,14 @@ export class Renderer {
       // the state is used by NgPressContent component
       // and can be used by other layout components as well
       const parsed = this.parsed.value();
-      this.press.state.set({
-        conf: this.conf,
-        template: this.contentTemplate(),
-        data: parsed.data,
-        heading: parsed.headings,
-      });
+      this.press.data.set(parsed.data);
+      this.press.heading.set(parsed.headings);
     });
+  }
+
+  ngAfterViewInit() {
+    // not supposed to change during the lifetime of this component
+    this.press.template.set(this.contentTemplate());
   }
 }
 

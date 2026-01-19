@@ -6,7 +6,7 @@ import {ActivatedNgPress} from './activated-ng-press';
   selector: 'ngp-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet],
-  template: '<ng-container *ngTemplateOutlet="press.state().template" />'
+  template: '<ng-container *ngTemplateOutlet="press.template()" />'
 })
 export class NgPressContent {
   protected readonly press = inject(ActivatedNgPress);
