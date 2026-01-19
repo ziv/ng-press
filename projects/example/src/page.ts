@@ -1,11 +1,13 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {ActivatedNgPress, NgPressContent} from 'ng-press-core';
+import {TableOfContent} from './table-of-content';
 
 @Component({
   selector: 'ngp-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgPressContent,
+    TableOfContent,
   ],
   template: `
     <header class="container">
@@ -17,6 +19,7 @@ import {ActivatedNgPress, NgPressContent} from 'ng-press-core';
     </header>
 
     <main class="container">
+<!--      <ngp-toc [headings]="press().heading" />-->
       <ngp-content/>
     </main>
 
