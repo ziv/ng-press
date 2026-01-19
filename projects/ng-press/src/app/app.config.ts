@@ -1,6 +1,5 @@
 import {ApplicationConfig, provideBrowserGlobalErrorListeners} from '@angular/core';
 import {provideRouter, withViewTransitions} from '@angular/router';
-import {provideClientHydration, withEventReplay, withHttpTransferCacheOptions} from '@angular/platform-browser';
 import {provideNgPress} from 'ng-press-core';
 import {Home, Page} from 'example';
 import {CONTENT_LOADER} from './loader/content-loader';
@@ -8,12 +7,14 @@ import {ClientContentLoader} from './loader/client-content-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideClientHydration(
-      withEventReplay(),
-      withHttpTransferCacheOptions({
-        includePostRequests: true
-      }),
-    ),
+    // we are not really SSR app, so no need for hydration and event replay
+    //
+    // provideClientHydration(
+    //   withEventReplay(),
+    //   withHttpTransferCacheOptions({
+    //     includePostRequests: true
+    //   }),
+    // ),
     provideBrowserGlobalErrorListeners(),
     /**
      * We have a single route that loads everything dynamically

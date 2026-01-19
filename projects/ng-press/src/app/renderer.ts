@@ -22,9 +22,7 @@ import {contentParser} from './utils/content-parser';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgComponentOutlet],
   template: `
-    @if (comp()) {
-      <ng-container [ngComponentOutlet]="comp()"/>
-    }
+    <ng-container [ngComponentOutlet]="comp()"/>
     <ng-template #contentTemplate>
       @if (parsed.hasValue()) {
         <div [innerHTML]="html()"></div>
