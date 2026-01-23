@@ -1,8 +1,8 @@
 import {mergeApplicationConfig, ApplicationConfig} from '@angular/core';
 import {provideServerRendering, withRoutes} from '@angular/ssr';
+import {CONTENT_LOADER} from 'ng-press-core';
 import {appConfig} from './app.config';
 import {serverRoutes} from './app.routes.server';
-import {CONTENT_LOADER} from './loader/content-loader';
 import {ServerContentLoader} from './loader/server-content-loader';
 
 const serverConfig: ApplicationConfig = {

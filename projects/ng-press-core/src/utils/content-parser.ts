@@ -16,7 +16,7 @@ export type ParsedContent = {
 };
 
 /**
- * Naive front-matter parser.
+ * Naive/simple front-matter parser.
  * @param content
  */
 function frontMatter(content: string): FrontMatter {
@@ -33,6 +33,9 @@ function frontMatter(content: string): FrontMatter {
   }
 }
 
+/**
+ * Naive/simple Shiki code block highlighter for Marked.
+ */
 function markedShiki(): MarkedExtension {
   return {
     async: true,
@@ -67,9 +70,9 @@ export async function contentParser(content: string): Promise<ParsedContent> {
   const html = await marked.parse(markdown);
   const headings = getHeadingList();
   const sanitized = insane(html, {
+    ...insane.defaults,
     allowedAttributes: {
-      // we allow href, name, target and rel on anchor tags
-      a: ['href', 'name', 'target', 'rel'],
+      ...insane.defaults.allowedAttributes,
       // we allow style attributes on pre and span for shiki syntax highlighting
       pre: ['style'],
       span: ['style'],

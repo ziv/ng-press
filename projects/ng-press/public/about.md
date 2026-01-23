@@ -1,6 +1,6 @@
 ---
 title: About NgPress
-layout: page
+layout: home
 ---
 
 # About NgPress

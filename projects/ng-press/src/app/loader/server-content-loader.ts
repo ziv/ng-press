@@ -1,15 +1,18 @@
-import {inject, Injectable} from '@angular/core';
-import {ContentLoader} from './content-loader';
+import {inject, Injectable, TransferState} from '@angular/core';
+import {CONTENT_LOADER_KEY, ContentLoader, NG_PRESS_TOKEN} from 'ng-press-core';
 import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
-import {NG_PRESS_TOKEN} from 'ng-press-core';
 
 @Injectable()
 export class ServerContentLoader implements ContentLoader {
   private conf = inject(NG_PRESS_TOKEN);
+  private state = inject(TransferState);
 
   async load(path?: string): Promise<string> {
     const fullPath = join(this.conf.local, path || 'index') + '.md';
-    return readFile(fullPath, 'utf-8');
+    const text = await readFile(fullPath, 'utf-8');
+    this.state.set(CONTENT_LOADER_KEY, text);
+    console.log(fullPath);
+    return text;
   }
 }

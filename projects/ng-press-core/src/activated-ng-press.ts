@@ -1,22 +1,16 @@
-import {Injectable, signal, type TemplateRef} from '@angular/core';
-import type {HeadingData} from 'marked-gfm-heading-id';
-import type {NgPressConfig} from './primitives';
+import {computed, inject, Injectable} from '@angular/core';
+import {NgPressCore} from './ng-press-core-service';
 import {injectNgPress} from './utils';
-
-export type NgPressState = {
-  conf: NgPressConfig;
-  template: TemplateRef<unknown> | null;
-  data: Record<string, unknown>;
-  heading: HeadingData[];
-}
 
 /**
  * Service to hold the current state of the activated NgPress content.
  */
 @Injectable({providedIn: 'root'})
 export class ActivatedNgPress {
-  readonly config = signal<NgPressConfig>(injectNgPress());
-  readonly template = signal<TemplateRef<unknown> | null>(null);
-  readonly data = signal<Record<string, unknown>>({});
-  readonly heading = signal<HeadingData[]>([]);
+  private readonly core = inject(NgPressCore);
+
+  readonly config = injectNgPress();
+  readonly error = computed(() => this.core.error());
+  readonly headings = computed(() => this.core.headings());
+  readonly frontmatter = computed(() => this.core.data());
 }

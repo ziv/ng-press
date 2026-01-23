@@ -20,9 +20,10 @@ import {TableOfContent} from './table-of-content';
     <header class="container">
       <nav>
         <ul>
-          <li><strong>{{ press.config().name }}</strong></li>
+          <li><strong>{{ press.config.name }}</strong></li>
         </ul>
         <ul>
+          <li><a href="/ng-press">Home</a></li>
           <li><a href="/ng-press/about">About</a></li>
         </ul>
       </nav>
@@ -30,7 +31,7 @@ import {TableOfContent} from './table-of-content';
 
     <main class="container">
       <aside>
-        <ngp-toc [headings]="press.heading()"/>
+        <ngp-toc [headings]="press.headings()"/>
       </aside>
       <article>
         <ngp-content/>

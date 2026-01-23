@@ -1,8 +1,7 @@
 import {ApplicationConfig, provideBrowserGlobalErrorListeners} from '@angular/core';
 import {provideRouter, withViewTransitions} from '@angular/router';
-import {provideNgPress} from 'ng-press-core';
+import {CONTENT_LOADER, provideNgPress} from 'ng-press-core';
 import {Home, Page} from 'example';
-import {CONTENT_LOADER} from './loader/content-loader';
 import {ClientContentLoader} from './loader/client-content-loader';
 
 export const appConfig: ApplicationConfig = {
