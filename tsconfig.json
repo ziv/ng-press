@@ -48,6 +48,12 @@
     },
     {
       "path": "./projects/example/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/md-demo/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/md-demo/tsconfig.spec.json"
     }
   ]
 }
